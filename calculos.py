@@ -27,25 +27,22 @@ def calcular_precios(bid_oro, bid_plata, trm):
 
 
 def generar_texto_copia(precios, trm, bid_oro, bid_plata):
-    """Genera el texto plano para copiar y pegar en WhatsApp"""
     from datetime import datetime
     hora = datetime.now().strftime('%d/%m/%Y %H:%M')
 
     lineas = [
-        f"Listado de precios — {hora}",
-        f"BID Oro: ${bid_oro:,.0f} USD/oz",
-        f"Dólar: ${trm:,.0f} COP",
+        f"Precios {hora}",
+        f"Dólar: ${trm:,.0f}",
         "",
         "── ORO ──",
     ]
 
     for tipo, valor in precios["oro"].items():
-        lineas.append(f"{tipo} = ${valor:,.0f} COP")
+        nombre = tipo.replace("ORO ", "")
+        lineas.append(f"{nombre} = ${valor:,.0f}")
 
     lineas.append("")
     lineas.append("── PLATA ──")
-
-    for tipo, valor in precios["plata"].items():
-        lineas.append(f"{tipo} = ${valor:,.0f} COP")
+    lineas.append(f"PLATA PURA = ${list(precios['plata'].values())[0]:,.0f}")
 
     return "\n".join(lineas)

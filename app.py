@@ -44,14 +44,15 @@ st.warning("⚠️ Consulte el valor del dólar en Google: **'dólar hoy'** e in
 trm_input = st.text_input(
     "Ingrese el valor del dólar (COP)",
     placeholder="Ejemplo: 3730",
-    label_visibility="collapsed"
+    label_visibility="collapsed",
+    key="trm_field"
 )
 
-calcular = False
 if trm_input and len(trm_input.strip()) >= 4:
     calcular = st.button("🧮 Calcular precios", type="primary")
 else:
     st.button("🧮 Calcular precios", disabled=True)
+    calcular = False
 
 if not trm_input or not calcular:
     st.info("👆 Ingrese el dólar del día y presione **Calcular precios**")
