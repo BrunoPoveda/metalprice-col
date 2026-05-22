@@ -109,68 +109,42 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ─────────────────────────────────────────
 # BOTÓN COPIAR
 # ─────────────────────────────────────────
+# ─────────────────────────────────────────
+# COMPARTIR EN WHATSAPP
+# ─────────────────────────────────────────
 texto = generar_texto_copia(precios, trm, bid_oro, bid_plata)
 
-st.markdown("### 📋 Copiar para WhatsApp")
+st.markdown("### 📋 Compartir precios")
 
-copy_html = f"""
-<style>
-.copy-box {{
-    background-color: #1a1a2e;
-    border: 1px solid #444;
-    border-radius: 10px;
-    padding: 20px;
-    font-family: monospace;
-    font-size: 14px;
-    color: #e0e0e0;
-    white-space: pre-line;
-    margin-bottom: 12px;
-}}
-.copy-btn {{
+# Codificar texto para URL de WhatsApp
+import urllib.parse
+texto_url = texto.replace("\n", "%0A").replace("\r", "")
+whatsapp_url = f"https://wa.me/?text={texto_url}"
+
+# Mostrar texto de vista previa
+st.text_area(
+    "Vista previa del mensaje:",
+    value=texto,
+    height=300,
+    label_visibility="visible"
+)
+
+# Botón que abre WhatsApp directamente
+st.markdown(f"""
+<a href="{whatsapp_url}" target="_blank">
+<button style='
     background-color: #25D366;
     color: white;
     border: none;
-    padding: 10px 24px;
-    font-size: 16px;
-    border-radius: 8px;
+    padding: 14px 24px;
+    font-size: 18px;
+    border-radius: 10px;
     cursor: pointer;
     width: 100%;
-}}
-.copy-btn:hover {{
-    background-color: #1ebe5d;
-}}
-.copy-btn.copiado {{
-    background-color: #555;
-}}
-</style>
-
-<div class="copy-box" id="textoCopia">{texto}</div>
-<button class="copy-btn" onclick="copiarTexto()" id="btnCopiar">
-    📋 Copiar todo para WhatsApp
+    margin-top: 10px;
+'>
+    📲 Abrir en WhatsApp
 </button>
+</a>
+""", unsafe_allow_html=True)
 
-<script>
-function copiarTexto() {{
-    const el = document.getElementById('textoCopia');
-    const texto = el.innerText;
-    const textarea = document.createElement('textarea');
-    textarea.value = texto;
-    textarea.style.position = 'fixed';
-    textarea.style.opacity = '0';
-    document.body.appendChild(textarea);
-    textarea.focus();
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    const btn = document.getElementById('btnCopiar');
-    btn.innerText = '✅ ¡Copiado!';
-    btn.classList.add('copiado');
-    setTimeout(() => {{
-        btn.innerText = '📋 Copiar todo para WhatsApp';
-        btn.classList.remove('copiado');
-    }}, 2000);
-}}
-</script>
-"""
-
-st.components.v1.html(copy_html, height=600)
