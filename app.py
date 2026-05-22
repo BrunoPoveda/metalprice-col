@@ -39,31 +39,24 @@ col2.metric("BID Plata (USD/oz)", f"${bid_plata:,.2f}")
 # ─────────────────────────────────────────
 st.markdown("---")
 st.markdown("### 💵 Dólar del día (COP)")
-st.warning("⚠️ Consulte el valor del dólar en Google: **'dólar hoy'** e ingréselo aquí")
+st.warning("⚠️ Consulte el valor del dólar en Google: **'dólar hoy'** e ingréselo aquí y presione **Enter**")
 
 trm_input = st.text_input(
     "Ingrese el valor del dólar (COP)",
-    placeholder="Ejemplo: 3730",
+    placeholder="Ejemplo: 3730 — presione Enter para calcular",
     label_visibility="collapsed",
     key="trm_field"
 )
 
-if trm_input and len(trm_input.strip()) >= 4:
-    calcular = st.button("🧮 Calcular precios", type="primary")
-else:
-    st.button("🧮 Calcular precios", disabled=True)
-    calcular = False
-
-if not trm_input or not calcular:
-    st.info("👆 Ingrese el dólar del día y presione **Calcular precios**")
+if not trm_input or len(trm_input.strip()) < 4:
+    st.info("👆 Ingrese el dólar del día y presione **Enter**")
     st.stop()
 
 try:
     trm = float(trm_input.strip().replace(",", "."))
 except:
-    st.error("❌ El valor ingresado no es válido. Use solo números, ejemplo: 3730")
+    st.error("❌ Valor no válido. Use solo números, ejemplo: 3730")
     st.stop()
-
 # ─────────────────────────────────────────
 # RESULTADOS
 # ─────────────────────────────────────────
@@ -172,4 +165,4 @@ function copiarTexto() {{
 </script>
 """
 
-st.components.v1.html(copy_html, height=400)
+st.components.v1.html(copy_html, height=600)
