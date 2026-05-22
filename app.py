@@ -112,24 +112,23 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ─────────────────────────────────────────
 # COMPARTIR EN WHATSAPP
 # ─────────────────────────────────────────
+# ─────────────────────────────────────────
+# COMPARTIR EN WHATSAPP
+# ─────────────────────────────────────────
+import urllib.parse
+from datetime import datetime
+
 texto = generar_texto_copia(precios, trm, bid_oro, bid_plata)
 
 st.markdown("### 📋 Compartir precios")
 
-# Codificar texto para URL de WhatsApp
-import urllib.parse
-texto_url = texto.replace("\n", "%0A").replace("\r", "")
-whatsapp_url = f"https://wa.me/?text={texto_url}"
+# Vista previa NO editable
+st.code(texto, language=None)
 
-# Mostrar texto de vista previa
-st.text_area(
-    "Vista previa del mensaje:",
-    value=texto,
-    height=300,
-    label_visibility="visible"
-)
+# URL con saltos de línea correctos para WhatsApp
+texto_url = urllib.parse.quote(texto)
+whatsapp_url = f"https://api.whatsapp.com/send?text={texto_url}"
 
-# Botón que abre WhatsApp directamente
 st.markdown(f"""
 <a href="{whatsapp_url}" target="_blank">
 <button style='
@@ -143,8 +142,7 @@ st.markdown(f"""
     width: 100%;
     margin-top: 10px;
 '>
-    📲 Abrir en WhatsApp
+    📲 Compartir en WhatsApp
 </button>
 </a>
 """, unsafe_allow_html=True)
-
