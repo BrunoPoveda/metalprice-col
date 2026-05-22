@@ -151,16 +151,24 @@ copy_html = f"""
 
 <script>
 function copiarTexto() {{
-    const texto = document.getElementById('textoCopia').innerText;
-    navigator.clipboard.writeText(texto).then(function() {{
-        const btn = document.getElementById('btnCopiar');
-        btn.innerText = '✅ ¡Copiado!';
-        btn.classList.add('copiado');
-        setTimeout(() => {{
-            btn.innerText = '📋 Copiar todo para WhatsApp';
-            btn.classList.remove('copiado');
-        }}, 2000);
-    }});
+    const el = document.getElementById('textoCopia');
+    const texto = el.innerText;
+    const textarea = document.createElement('textarea');
+    textarea.value = texto;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    const btn = document.getElementById('btnCopiar');
+    btn.innerText = '✅ ¡Copiado!';
+    btn.classList.add('copiado');
+    setTimeout(() => {{
+        btn.innerText = '📋 Copiar todo para WhatsApp';
+        btn.classList.remove('copiado');
+    }}, 2000);
 }}
 </script>
 """

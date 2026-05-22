@@ -45,4 +45,5 @@ def generar_texto_copia(precios, trm, bid_oro, bid_plata):
     lineas.append("── PLATA ──")
     lineas.append(f"PLATA PURA = ${list(precios['plata'].values())[0]:,.0f}")
 
-    return "\n\n".join(lineas)
+    # Unir con salto de línea real
+    return "\r\n".join(lineas)
